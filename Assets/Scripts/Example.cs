@@ -5,11 +5,11 @@ public class Example : MonoBehaviour
 {
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference jumpAction;
-    [SerializeField] float velocity;
+    [SerializeField] float speed;
     [SerializeField] float jumpForce;
     Rigidbody rb;
     Vector3 movementDirection;
-
+    public bool IsJumping;
 
     private void Awake()
     {
@@ -30,16 +30,19 @@ public class Example : MonoBehaviour
     {
         Vector2 direction = moveAction.action.ReadValue<Vector2>();
         movementDirection = new Vector3(direction.x, 0, direction.y);
-
+        if (jumpAction.action.WasPressedThisFrame())
+        {
+            IsJumping = true;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (jumpAction.action.WasPressedThisFrame())
+        rb.linearVelocity = movementDirection * speed;
+        if (IsJumping == true)
         {
-            movementDirection.y = jumpForce;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            IsJumping = false;
         }
-        rb.AddForce(movementDirection * velocity, ForceMode.Force);
-        movementDirection.y = 0;
     }
 }
