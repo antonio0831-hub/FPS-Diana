@@ -5,7 +5,7 @@ public class MovementFPS : MonoBehaviour
 {
     [SerializeField] private InputActionReference move, look, jump, run;
     [SerializeField] private Camera camera;
-    [SerializeField] private List<LayerMask> groundLayer;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float walkSpeed, runSpeed, jumpForce, mouseSensitivity;
 
     private Rigidbody rb;
@@ -41,9 +41,9 @@ public class MovementFPS : MonoBehaviour
     {
         mouseInput = move.action.ReadValue<Vector2>();
         isRunning = run.action.IsPressed();
-        if ((jump.action.WasPressedThisFrame())
+        if (jump.action.WasPressedThisFrame())
         {
-            isJumping = true
+            isJumping = true;
         }
     }
 }
