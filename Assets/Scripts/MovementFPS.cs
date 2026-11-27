@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 public class MovementFPS : MonoBehaviour
 {
     [SerializeField] private InputActionReference move, look, jump, run;
-    [SerializeField] private Camera camera;
+    [SerializeField] private Transform camera;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float walkSpeed, runSpeed, jumpForce, mouseSensitivity, cameraIncline;
 
@@ -11,6 +11,7 @@ public class MovementFPS : MonoBehaviour
     private Rigidbody rb;
     private bool isRunning, isJumping;
     private Vector2 mouseInput;
+    private Transform orientation;
 
     private void Awake()
     {
@@ -48,6 +49,12 @@ public class MovementFPS : MonoBehaviour
         cameraOrientation.Rotate(0f, mouseInput.x * mouseSensitivity, 0f);//movimiento camara horizontal
         cameraIncline -= mouseInput.y * mouseSensitivity;
         cameraIncline = Mathf.Clamp(cameraIncline, -80f, 80f);
-        cameraOrientation.localRotation = Quaternion.Euler(cameraIncline, 0f, 0f);
+        camera.localRotation = Quaternion.Euler(cameraIncline, 0f, 0f);
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+   
 }
